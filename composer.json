@@ -1,0 +1,22 @@
+{
+    "name": "nitool/rc-boilerplate",
+    "description": "Tool for creating RC cards.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sebastian Niecikowski",
+            "email": "snitool@wp.pl"
+        }
+    ],
+    "require": {
+        "symfony/console": "^5.1",
+        "twig/twig": "^3.0",
+        "symfony/webpack-encore-bundle": "^1.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"
+        }
+    }
+}
+
