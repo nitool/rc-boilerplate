@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+IMAGE_NAME=$(basename $(pwd))
+CONTAINER_NAME=$(echo ${IMAGE_NAME}_pre_commit_hook)
+
+printf -- "\n\n pre commit procedure begins \n\n"
+
+docker container rm -f ${CONTAINER_NAME} &>/dev/null || true
+docker container run \
+    -v $(pwd):/var/www/html \
+    -d --name=${CONTAINER_NAME} ${IMAGE_NAME} sleep infinity
+
+docker container rm -f ${CONTAINER_NAME}
+
+printf -- "\n\n pre commit procedure has ended \n\n"
+
