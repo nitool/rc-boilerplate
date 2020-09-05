@@ -1,0 +1,10 @@
+body {
+    background: red;
+}
+
+.test {
+    &--test2 {
+        text-align: center;
+    }
+}
+

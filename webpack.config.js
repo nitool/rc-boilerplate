@@ -1,20 +1,36 @@
-let Encore = require('@symfony/webpack-encore');
+const path = require('path');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-Encore
-    .setOutputPath('build/')
-    .setPublicPath('/build')
-    .addEntry('app', './assets/scss/app.scss')
-    .splitEntryChunks()
-    .enableSassLoader()
-    .enableSingleRuntimeChunk()
-    .cleanupOutputBeforeBuild()
-    .enableBuildNotifications()
-    .enableSourceMaps(!Encore.isProduction())
-    .enableVersioning(Encore.isProduction())
-    .configureBabelPresetEnv((config) => {
-        config.useBuiltIns = 'usage';
-        config.corejs = 3;
-    });
-
-module.exports = Encore.getWebpackConfig();
+module.exports = {
+    entry: {
+        app: path.resolve(__dirname, 'assets/scss', 'app.scss'),
+    },
+    output: {
+        filename: '[name].bundle.js',
+        path: path.resolve(__dirname, 'build'),
+    },
+    module: {
+        rules: [
+            {
+                test: /\.s[ac]ss$/i,
+                use: [
+                    MiniCssExtractPlugin.loader,
+                    'css-loader',
+                    'sass-loader',
+                ],
+            },
+        ],
+    },
+    plugins: [
+        new CleanWebpackPlugin(),
+        new MiniCssExtractPlugin(),
+    ],
+    optimization: {
+        minimizer: [
+            new OptimizeCssAssetsPlugin({}),
+        ],
+    },
+};
 
