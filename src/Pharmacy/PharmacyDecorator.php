@@ -2,6 +2,8 @@
 
 namespace App\Pharmacy;
 
+use App\Product\ProductInterface;
+
 abstract class PharmacyDecorator implements PharmacyInterface
 {
     /**

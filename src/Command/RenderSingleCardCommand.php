@@ -2,9 +2,11 @@
 
 namespace App\Command;
 
+use App\Pharmacy\Melissa;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Twig\Environment;
 
@@ -31,6 +33,7 @@ class RenderSingleCardCommand extends Command
     {
         $this->setName('generator:render:single');
         $this->addArgument('name', InputArgument::REQUIRED);
+        $this->addOption('mode', '', InputOption::REQUIRED, 'RC generating mode', 'local');
     }
 
     private function preparePath(string $name): string

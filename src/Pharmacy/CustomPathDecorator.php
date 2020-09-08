@@ -2,6 +2,8 @@
 
 namespace App\Pharmacy;
 
+use App\Product\ProductInterface;
+
 class CustomPathDecorator extends PharmacyDecorator
 {
     /**
@@ -9,7 +11,7 @@ class CustomPathDecorator extends PharmacyDecorator
      */
     private $customPath;
 
-    public function __construct(string $customPath, ProductInterface $pharmacy)
+    public function __construct(string $customPath, PharmacyInterface $pharmacy)
     {
         $this->customPath = $customPath;
         parent::__construct($pharmacy);    

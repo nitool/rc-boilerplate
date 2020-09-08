@@ -12,6 +12,8 @@ docker container run \
     -v $(pwd):/var/www/html \
     -d --name=${CONTAINER_NAME} ${IMAGE_NAME} sleep infinity
 
+docker container exec -t ${CONTAINER_NAME} composer test
+
 docker container rm -f ${CONTAINER_NAME}
 
 printf -- "\n\n pre commit procedure has ended \n\n"
