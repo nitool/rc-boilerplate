@@ -5,13 +5,26 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const pharmacies = ['melissa'];
+
+function generateEntries(productName) {
+    let entries = {};
+    for (let pharmacy of pharmacies) {
+        entries[pharmacy + '_' + productName] = [
+            path.resolve(__dirname, 'assets', 'scss', 'pharmacy', '_' + pharmacy + '.scss'),
+            path.resolve(__dirname, 'assets', 'scss', productName + '.scss'),
+        ];
+    }
+
+    return entries;
+}
 
 module.exports = {
     entry: {
-        app: path.resolve(__dirname, 'assets/scss', 'app.scss'),
+        ...generateEntries('product1'),
     },
     output: {
-        filename: '[name].bundle.js',
+        filename: '[name].js',
         path: path.resolve(__dirname, 'build'),
     },
     module: {
