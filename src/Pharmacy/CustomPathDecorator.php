@@ -2,7 +2,7 @@
 
 namespace App\Pharmacy;
 
-use App\Product\ProductInterface;
+use App\Product\Product;
 
 class CustomPathDecorator extends PharmacyDecorator
 {
@@ -11,13 +11,13 @@ class CustomPathDecorator extends PharmacyDecorator
      */
     private $customPath;
 
-    public function __construct(string $customPath, PharmacyInterface $pharmacy)
+    public function __construct(string $customPath, Pharmacy $pharmacy)
     {
         $this->customPath = $customPath;
         parent::__construct($pharmacy);    
     }
 
-    public function transformProductAssetUrl(ProductInterface $product, string $url): string
+    public function transformProductAssetUrl(Product $product, string $url): string
     {
         return $this->customPath . DIRECTORY_SEPARATOR . $url;
     }

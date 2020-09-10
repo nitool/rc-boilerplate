@@ -3,21 +3,21 @@
 namespace App\Tests\Pharmacy;
 
 use App\Pharmacy\CustomPathDecorator;
-use App\Pharmacy\Melissa;
-use App\Product\ProductInterface;
+use App\Pharmacy\MelissaFactory;
+use App\Pharmacy\Pharmacy;
+use App\Product\Product;
 use PHPUnit\Framework\TestCase;
 
 class CustomPathDecoratorTest extends TestCase
 {
     /**
-     * @covers App\Pharmacy\Melissa
+     * @covers App\Pharmacy\Pharmacy
      * @covers App\Pharmacy\CustomPathDecorator
      */
     public function testAssetTransformingWithDecorator(): void
     {
-        $product = $this->createMock(ProductInterface::class);
-        $product->method('getCode')->willReturn('example_product');
-        $pharmacy = new Melissa();
+        $product = new Product('example_product');
+        $pharmacy = (new MelissaFactory())->create();
         $this->assertEquals(
             'https://www.apteka-melissa.pl/css/img/example_product/test.png',
             $pharmacy->transformProductAssetUrl($product, 'test.png')

@@ -2,18 +2,23 @@
 
 namespace App\Pharmacy;
 
-use App\Product\ProductInterface;
+use App\Product\Product;
 
-abstract class PharmacyDecorator implements PharmacyInterface
+abstract class PharmacyDecorator extends Pharmacy
 {
     /**
      * @var PharmacyInterface
      */
     private $pharmacy;
 
-    public function __construct(PharmacyInterface $pharmacy)
+    public function __construct(Pharmacy $pharmacy)
     {
         $this->pharmacy = $pharmacy;     
+    }
+
+    public function getCode(): string
+    {
+        return $this->pharmacy->getCode();
     }
 
     public function getRcContainerWidth(): int
@@ -26,7 +31,12 @@ abstract class PharmacyDecorator implements PharmacyInterface
         return $this->pharmacy->getScrollingOffset();
     }
 
-    public function transformProductAssetUrl(ProductInterface $product, string $url): string
+    public function setScrollingOffset(int $offset): void
+    {
+        $this->pharmacy->setScrollingOffset($offset);
+    }
+
+    public function transformProductAssetUrl(Product $product, string $url): string
     {
         return $this->pharmacy->transformProductAssetUrl($product, $url);
     }
