@@ -5,7 +5,15 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const pharmacies = ['melissa'];
+const pharmacies = [
+    'melissa',
+    'cefarm24',
+    'zawisza',
+    'allecco',
+    'olmed',
+    'wapteka',
+    'ziko',
+];
 
 function generateEntries(productName) {
     let entries = {};

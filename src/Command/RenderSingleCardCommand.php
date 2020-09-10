@@ -22,18 +22,41 @@ class RenderSingleCardCommand extends Command
      */
     private $outputDir;
 
-    public function __construct(Environment $twig, string $outputDir)
+    /**
+     * @var ProductInterface[]
+     */
+    private $products = [];
+
+    /**
+     * @param ProductInterface[] $products
+     */
+    public function __construct(Environment $twig, string $outputDir, array $products)
     {
         $this->twig = $twig;    
         $this->outputDir = $outputDir;
+        foreach ($products as $product) {
+            if (!$product instanceof ProductInterface) {
+                throw new \InvalidArgumentException();
+            }
+        }
+
         parent::__construct();
+    }
+
+    /**
+     * @return PharmacyInterface[]
+     */
+    private function getPharmacies(): array
+    {
+
     }
 
     protected function configure()
     {
         $this->setName('generator:render:single');
-        $this->addArgument('name', InputArgument::REQUIRED);
+        $this->addArgument('product', InputArgument::REQUIRED);
         $this->addOption('mode', '', InputOption::REQUIRED, 'RC generating mode', 'local');
+        $this->addOption('pharmacy', '', InputOption:REQUIRED, 'Code of pharmacy to render', null);
     }
 
     private function preparePath(string $name): string

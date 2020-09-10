@@ -4,6 +4,9 @@ namespace App\Pharmacy;
 
 use App\Product\ProductInterface;
 
+/**
+ * @todo: Instead of PharmacyInterface create Pharmacy class and create some kind of abstract factory to create each pharmacy
+ */
 interface PharmacyInterface
 {
     public function getRcContainerWidth(): int;
