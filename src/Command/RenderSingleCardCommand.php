@@ -67,9 +67,9 @@ class RenderSingleCardCommand extends Command
         $this->addOption('mode', '', InputOption::VALUE_REQUIRED, 'RC generating mode', 'local');
     }
 
-    private function preparePath(string $name): string
+    private function preparePath(Pharmacy $pharmacy, Product $product): string
     {
-        return $this->outputDir . DIRECTORY_SEPARATOR . $name . '.html';
+        return $this->outputDir . DIRECTORY_SEPARATOR . $pharmacy->getCode() . '-' . $product->getCode() . '.html';
     }
 
     private function getPharmacy(InputInterface $input): Pharmacy
@@ -99,14 +99,15 @@ class RenderSingleCardCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->write('> generating... ');
-        $name = $input->getArgument('product');
-        $content = $this->twig->render('base.html.twig', [
-            'product' => $this->getProduct($name),
-            'pharmacy' => $this->getPharmacy($input),
+        $product = $this->getProduct($input->getArgument('product'));
+        $pharmacy = $this->getPharmacy($input);
+        $content = $this->twig->render($product->getCode() . '.html.twig', [
+            'product' => $product,
+            'pharmacy' => $pharmacy,
         ]);
 
-        @unlink($this->preparePath($name));
-        file_put_contents($this->preparePath($name), $content);
+        @unlink($this->preparePath($pharmacy, $product));
+        file_put_contents($this->preparePath($pharmacy, $product), $content);
         $output->writeln('done');
 
         return 0;

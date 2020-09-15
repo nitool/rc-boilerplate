@@ -1,0 +1,20 @@
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;600;700;900&display=swap');
+
+$font-size-base-width: 1000;
+$font-size-pharmacy-width: 1000 !default;
+$font-weight-light: 300;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+$font-weight-black: 900;
+$font-family: 'Titillium Web', sans-serif;
+
+@function font-size($base) {
+    @return (($base * $font-size-pharmacy-width) / $font-size-base-width) * 1px;
+}
+
+#ulixes-rc-container {
+    font-size: font-size(23);
+    font-weight: $font-weight-light;
+    font-family: $font-family;
+}
+

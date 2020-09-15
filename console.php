@@ -8,6 +8,7 @@ use App\Command\RenderSingleCardCommand;
 use App\Pharmacy\PharmacyCreator;
 use App\Product\Product;
 use App\Twig\AssetExtension;
+use App\Twig\StringExtension;
 use Symfony\Component\Console\Application;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
@@ -18,6 +19,7 @@ $loader = new FilesystemLoader(__DIR__ . '/templates');
 
 $twig = new Environment($loader); 
 $twig->addExtension(new AssetExtension(new AssetManager($projectDir)));
+$twig->addExtension(new StringExtension());
 
 $app = new Application();
 $renderSingleCardCommand = new RenderSingleCardCommand(

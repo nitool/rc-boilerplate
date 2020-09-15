@@ -21,8 +21,12 @@ class AssetExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('insert_inline_styles', [$this, 'createInlineStyles']),
-            new TwigFunction('insert_inline_scripts', [$this, 'createInlineScripts']),
+            new TwigFunction('insert_inline_styles', [$this, 'createInlineStyles'], [
+                'is_safe' => ['html'],
+            ]),
+            new TwigFunction('insert_inline_scripts', [$this, 'createInlineScripts'], [
+                'is_safe' => ['html'],
+            ]),
         ];
     }
 
