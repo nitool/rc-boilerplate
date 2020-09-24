@@ -20,10 +20,12 @@ class AssetTransformer
     {
         return str_replace([
             '$PHARMACY',
+            '$PRODUCT_MODEL',
             '$PRODUCT',
             '$ASSET',
         ], [
             $pharmacy->getCode(),
+            $product->getModel(),
             $product->getCode(),
             $asset,
         ], $this->template);

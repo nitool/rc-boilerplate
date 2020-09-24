@@ -22,7 +22,7 @@ class CssPrefixedDecorator extends AssetTransformerDecorator
             $asset = $prefix . '-' . $asset;
         }
 
-        parent::transform($pharmacy, $product, $asset);
+        return parent::transform($pharmacy, $product, $asset);
     }
 }
 

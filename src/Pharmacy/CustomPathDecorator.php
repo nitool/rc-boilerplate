@@ -17,7 +17,7 @@ class CustomPathDecorator extends PharmacyDecorator
         parent::__construct($pharmacy);    
     }
 
-    public function transformProductAssetUrl(Product $product, string $url): string
+    public function getAssetPath(Product $product, string $url): string
     {
         return $this->customPath . DIRECTORY_SEPARATOR . $url;
     }

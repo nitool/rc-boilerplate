@@ -6,10 +6,9 @@ class CefarmFactory implements PharmacyFactory
 {
     public function create(): Pharmacy
     {
-        $transformer = new AssetTransformer('https://ulixes.pl/www/images/rc/$PRODUCT/$ASSET');
+        $transformer = new AssetTransformer('https://ulixes.pl/www/images/rc/$PRODUCT_MODEL/$ASSET');
         $transformer = new CssPrefixedDecorator($transformer);
-        $pharmacy = new Pharmacy('cefarm', 1170, $transformer);
-        $pharmacy->setScrollingOffset(65);
+        $pharmacy = new Pharmacy('cefarm24', $transformer);
 
         return $pharmacy;
     }

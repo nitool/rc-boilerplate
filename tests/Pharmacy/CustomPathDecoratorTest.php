@@ -16,17 +16,17 @@ class CustomPathDecoratorTest extends TestCase
      */
     public function testAssetTransformingWithDecorator(): void
     {
-        $product = new Product('example_product');
+        $product = new Product('example_product', 'example');
         $pharmacy = (new MelissaFactory())->create();
         $this->assertEquals(
-            'https://www.apteka-melissa.pl/css/img/example_product/test.png',
-            $pharmacy->transformProductAssetUrl($product, 'test.png')
+            'https://www.apteka-melissa.pl/css/img/example/test.png',
+            $pharmacy->getAssetPath($product, 'test.png')
         );
 
         $decorator = new CustomPathDecorator(__DIR__ . '/test', $pharmacy);
         $this->assertEquals(
             __DIR__ . '/test/test.png',
-            $decorator->transformProductAssetUrl($product, 'test.png')
+            $decorator->getAssetPath($product, 'test.png')
         );
     }
 }

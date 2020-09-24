@@ -6,10 +6,9 @@ class OlmedFactory implements PharmacyFactory
 {
     public function create(): Pharmacy
     {
-        $transformer = new AssetTransformer('https://ulixes.pl/www/images/rc/$PRODUCT/$ASSET');
+        $transformer = new AssetTransformer('https://ulixes.pl/www/images/rc/$PRODUCT_MODEL/$ASSET');
         $transformer = new CssPrefixedDecorator($transformer);
-        $pharmacy = new Pharmacy('olmed', 696, $transformer);
-        $pharmacy->setScrollingOffset(110);
+        $pharmacy = new Pharmacy('olmed', $transformer);
 
         return $pharmacy;
     }

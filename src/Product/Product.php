@@ -9,13 +9,24 @@ class Product
      */
     private $code;
 
-    public function __construct(string $code)
+    /**
+     * @var string
+     */
+    private $model;
+
+    public function __construct(string $code, string $model)
     {
-        $this->code = $code;     
+        $this->code = $code;
+        $this->model = $model;
     }
 
     public function getCode(): string
     {
         return $this->code;
+    }
+
+    public function getModel(): string
+    {
+        return $this->model;
     }
 }

@@ -6,7 +6,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const pharmacies = ['melissa', 'cefarm24', 'zawisza', 'allecco', 'olmed', 'wapteka', 'ziko'];
+const pharmacies = ['melissa', 'cefarm24', 'zawisza', 'allecco', 'olmed', 'wapteka', 'ziko', 'rosa', 'ceneo'];
 
 const ArbitraryCodeAfterReload = function (callback) {
   this.apply = function(compiler) {
@@ -28,36 +28,8 @@ const generateEntries = (productName) => {
     return entries;
 };
 
-module.exports = {
-    entry: {
-        ...generateEntries('product1'),
-    },
-    output: {
-        filename: '[name].js',
-        path: path.resolve(__dirname, 'build'),
-    },
-    module: {
-        rules: [
-            {
-                test: /\.s[ac]ss$/i,
-                use: [
-                    MiniCssExtractPlugin.loader,
-                    'css-loader',
-                    {
-                        loader: 'sass-loader',
-                        options: {
-                            additionalData: function (content, loaderContext) {
-                                let pharmacy = loaderContext.request.match(/(\w+)[?]?$/)[1];
-
-                                return `@import 'pharmacy/${pharmacy}';` + content;
-                            },
-                        },
-                    },
-                ],
-            },
-        ],
-    },
-    plugins: [
+module.exports = (env, argv) => {
+    let plugins = [
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin(),
         new CopyWebpackPlugin({
@@ -66,24 +38,64 @@ module.exports = {
                 to: 'img/',
             }]
         }),
-        // new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }), // todo: run only in prod build
-    ],
-    optimization: {
-        minimizer: [
-            new UglifyJsPlugin(),
-            new OptimizeCssAssetsPlugin({}),
-            new ArbitraryCodeAfterReload(() => {
-                let callback = (error, stdout, stderr) => {
-                    console.log(`generator finished: ${stdout}`);
-                }
+    ];
 
-                console.log('executing generators');
-                for (let pharmacy of pharmacies) {
-                    exec('./console.php generator:render:single ibuprom_kids_100 ' + pharmacy, callback);
-                    exec('./console.php generator:render:single ibuprom_kids_150 ' + pharmacy, callback);
-                }
-            }),
-        ],
-    },
+    if (argv.mode === 'production') {
+        plugins.push(new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }));
+    }
+
+    return {
+        entry: {
+            ...generateEntries('product1'),
+        },
+        output: {
+            filename: '[name].js',
+            path: path.resolve(__dirname, 'build'),
+        },
+        module: {
+            rules: [
+                {
+                    test: /\.s[ac]ss$/i,
+                    use: [
+                        MiniCssExtractPlugin.loader,
+                        'css-loader',
+                        {
+                            loader: 'sass-loader',
+                            options: {
+                                additionalData: function (content, loaderContext) {
+                                    if (argv.mode === 'development') {
+                                        content = '@import \'base/dev\';\n' + content;
+                                    }
+
+                                    let pharmacy = loaderContext.request.match(/(\w+)[?]?$/)[1];
+                                    content = `@import 'pharmacy/${pharmacy}';\n` + content;
+
+                                    return content;
+                                },
+                            },
+                        },
+                    ],
+                },
+            ],
+        },
+        plugins: plugins,
+        optimization: {
+            minimize: true,
+            minimizer: [
+                new UglifyJsPlugin(),
+                new OptimizeCssAssetsPlugin({}),
+                new ArbitraryCodeAfterReload(() => {
+                    let callback = (error, stdout, stderr) => {
+                        console.log(`generator finished: ${stdout}`);
+                    }
+
+                    console.log('executing generators');
+                    for (let pharmacy of pharmacies) {
+                        exec('./console.php generator:render:single product1 ' + pharmacy, callback);
+                    }
+                }),
+            ],
+        },
+    };
 };
 
