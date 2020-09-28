@@ -1,5 +1,14 @@
+$font-size-base-width: 1000;
+$font-size-pharmacy-width: 1000 !default;
+
 #ulixes-rc-container {
     max-width: 100%;
+    @if $font-size-pharmacy-width > $font-size-base-width {
+        width: $font-size-base-width * 1px !important;
+    }
+    @else {
+        width: $font-size-pharmacy-width * 1px !important;
+    }
 
     img {
         max-width: 100%;
