@@ -1,5 +1,6 @@
 vendor/
 node_modules/
 build/
-cards/
+cards/*
+!cards/.keep
 .phpunit.result.cache

@@ -6,6 +6,7 @@ const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ImageminPlugin = require('imagemin-webpack-plugin').default;
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const { DefinePlugin } = require('webpack');
 const pharmacies = ['melissa', 'cefarm24', 'zawisza', 'allecco', 'olmed', 'wapteka', 'ziko', 'rosa', 'ceneo'];
 
 const ArbitraryCodeAfterReload = function (callback) {
@@ -21,7 +22,7 @@ const generateEntries = (productName) => {
     for (let pharmacy of pharmacies) {
         entries[pharmacy + '_' + productName] = [
             path.resolve(__dirname, 'assets', 'scss', productName + '.scss') + '?' + pharmacy,
-            path.resolve(__dirname, 'assets', 'js', productName + '.js'),
+            path.resolve(__dirname, 'assets', 'js', productName + '.js') + '?' + pharmacy,
         ];
     }
 
@@ -40,6 +41,13 @@ module.exports = (env, argv) => {
         }),
     ];
 
+    plugins.push(new DefinePlugin({
+        PHARMACY_PRESET: () => {
+            console.log(arguments);
+            console.log('test');
+        },
+    }));
+
     if (argv.mode === 'production') {
         plugins.push(new ImageminPlugin({ test: /\.(jpe?g|png|gif|svg)$/i }));
     }
@@ -51,6 +59,12 @@ module.exports = (env, argv) => {
         output: {
             filename: '[name].js',
             path: path.resolve(__dirname, 'build'),
+        },
+        resolveLoader: {
+            modules: [
+                'node_modules',
+                path.resolve(__dirname, 'assets', 'js', 'webpack')
+            ],
         },
         module: {
             rules: [
@@ -75,6 +89,14 @@ module.exports = (env, argv) => {
                             },
                         },
                     ],
+                },
+                {
+                    test: /\.js$/i,
+                    use: [
+                        {
+                            loader: path.resolve(__dirname, 'assets', 'js', 'webpack', 'pharmacyLoader.js'),
+                        }
+                    ]
                 },
             ],
         },
