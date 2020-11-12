@@ -3,6 +3,8 @@
 namespace App\Twig;
 
 use App\Asset\AssetManagerInterface;
+use App\Product\Product;
+use App\Pharmacy\Pharmacy;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
@@ -30,8 +32,9 @@ class AssetExtension extends AbstractExtension
         ];
     }
 
-    public function createInlineStyles(string $entryName): string
+    public function createInlineStyles(Pharmacy $pharmacy, Product $product): string
     {
+        $entryName = $pharmacy->getCode() . '_' . $product->getCode();
         if (!$this->assetManager->hasStyleEntry($entryName)) {
             return '';
         }
@@ -41,8 +44,9 @@ class AssetExtension extends AbstractExtension
         }, $this->assetManager->getStyleEntryFiles($entryName))));
     }
 
-    public function createInlineScripts(string $entryName): string
+    public function createInlineScripts(Pharmacy $pharmacy, Product $product): string
     {
+        $entryName = $pharmacy->getCode() . '_' . $product->getCode();
         if (!$this->assetManager->hasScriptEntry($entryName)) {
             return '';
         }
@@ -52,4 +56,3 @@ class AssetExtension extends AbstractExtension
         }, $this->assetManager->getScriptEntryFiles($entryName))));
     }
 }
-

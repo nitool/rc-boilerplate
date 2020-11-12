@@ -14,6 +14,8 @@ class StringExtensionTest extends TestCase
             'Kubek stoi na stole i jest czerwony.',
             'Kubek stoi na&nbsp;stole i&nbsp;jest czerwony.'
         ];
+
+        yield ['zawierający mometazon', 'zawierający mometazon'];
     }
 
     /**

@@ -18,7 +18,7 @@ class StringExtension extends AbstractExtension
 
     public function addHardSpaces(string $subject): string
     {
-        return preg_replace('/(\b\w{1,2}\b)[ ]/', '$1&nbsp;', $subject);
+        return preg_replace('/((?:(?<![A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ])(?=[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ])|(?<=[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ])(?![A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]))[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]{1,2})[ ](?:(?<![A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ])(?=[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ])|(?<=[A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ])(?![A-Za-zżźćńółęąśŻŹĆĄŚĘŁÓŃ]))/', '$1&nbsp;', $subject);
     }
 }
 
