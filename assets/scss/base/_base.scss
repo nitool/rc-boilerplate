@@ -3,6 +3,7 @@ $font-size-pharmacy-width: 1000 !default;
 
 #ulixes-rc-container {
     max-width: 100%;
+    margin: 0 auto;
     @if $font-size-pharmacy-width > $font-size-base-width {
         width: $font-size-base-width * 1px !important;
     }
