@@ -4,6 +4,7 @@
 require __DIR__ . '/vendor/autoload.php';
 
 use App\Asset\AssetManager;
+use App\Command\CreateExportPackageCommand;
 use App\Command\RenderSingleCardCommand;
 use App\Pharmacy\PharmacyCreator;
 use App\Product\Product;
@@ -31,6 +32,14 @@ $renderSingleCardCommand = new RenderSingleCardCommand(
     $products
 );
 
-$app->add($renderSingleCardCommand);
-$app->run();
+$createExportPackageCommand = new CreateExportPackageCommand(
+    $twig,
+    $projectDir . DIRECTORY_SEPARATOR . 'cards',
+    $projectDir . DIRECTORY_SEPARATOR . 'build',
+    new PharmacyCreator(),
+    $products
+);
 
+$app->add($renderSingleCardCommand);
+$app->add($createExportPackageCommand);
+$app->run();
