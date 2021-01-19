@@ -4,7 +4,7 @@ namespace App\Twig;
 
 use App\Pharmacy\Pharmacy;
 use Twig\Extension\AbstractExtension;
-use Twig\TwigFilter;
+use Twig\TwigFunction;
 
 class PharmacyNavigationExtension extends AbstractExtension
 {
@@ -19,12 +19,10 @@ class PharmacyNavigationExtension extends AbstractExtension
         $this->config = require $navigationFile;
     }
 
-    public function getFilters()
+    public function getFunctions()
     {
         return [
-            new TwigFilter('hard_spaces', [$this, 'addHardSpaces'], [
-                'is_safe' => ['html'],
-            ]),
+            new TwigFunction('get_link_for_product', [$this, 'getLinkForProduct']),
         ];
     }
 
