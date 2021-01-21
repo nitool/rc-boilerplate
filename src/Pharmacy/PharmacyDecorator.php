@@ -31,6 +31,11 @@ abstract class PharmacyDecorator extends Pharmacy
         return $this->pharmacy->getScrollingOffset();
     }
 
+    public function hasExternalStyles(): bool
+    {
+        return $this->pharmacy->hasExternalStyles();
+    }
+
     public function setScrollingOffset(int $offset): void
     {
         $this->pharmacy->setScrollingOffset($offset);

@@ -19,7 +19,7 @@ class CssPrefixedDecorator extends AssetTransformerDecorator
     public function transform(Pharmacy $pharmacy, Product $product, string $asset): string
     {
         if (preg_match('/[.]css$/', $asset)) {
-            $asset = $prefix . '-' . $asset;
+            $asset = $this->prefix . '-' . $asset;
         }
 
         return parent::transform($pharmacy, $product, $asset);

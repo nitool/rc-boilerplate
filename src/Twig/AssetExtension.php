@@ -29,6 +29,9 @@ class AssetExtension extends AbstractExtension
             new TwigFunction('insert_inline_scripts', [$this, 'createInlineScripts'], [
                 'is_safe' => ['html'],
             ]),
+            new TwigFunction('insert_inline_static_scripts', [$this, 'createInlineStaticScripts'], [
+                'is_safe' => ['html'],
+            ]),
         ];
     }
 
@@ -54,5 +57,17 @@ class AssetExtension extends AbstractExtension
         return sprintf('<script>%s</script>', join('\n', array_map(function (string $file) { 
             return file_get_contents($file); 
         }, $this->assetManager->getScriptEntryFiles($entryName))));
+    }
+
+    public function createInlineStaticScripts(string $entryName): string
+    {
+        if (!$this->assetManager->hasScriptEntry($entryName)) {
+            return '';
+        }
+
+        return sprintf('<script>%s</script>', join('\n', array_map(function (string $file) { 
+            return file_get_contents($file); 
+        }, $this->assetManager->getScriptEntryFiles($entryName))));
+
     }
 }

@@ -8,7 +8,7 @@ class ZawiszaFactory implements PharmacyFactory
     {
         $transformer = new AssetTransformer('https://ulixes.pl/www/images/rc/$PRODUCT_MODEL/$ASSET');
         $transformer = new CssPrefixedDecorator($transformer);
-        $pharmacy = new Pharmacy('zawisza', $transformer);
+        $pharmacy = new Pharmacy('zawisza', $transformer, true);
 
         return $pharmacy;
     }

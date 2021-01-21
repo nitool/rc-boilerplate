@@ -3,4 +3,6 @@ node_modules/
 build/
 cards/*
 !cards/.keep
+dists/*
+!dists/.keep
 .phpunit.result.cache

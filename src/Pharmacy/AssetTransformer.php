@@ -16,7 +16,12 @@ class AssetTransformer
         $this->template = $template;    
     }
 
-    public function transform(Pharmacy $pharmacy, Product $product, string $asset): string
+    private function transformPath(
+        Pharmacy $pharmacy,
+        Product $product,
+        string $template,
+        string $asset
+    ): string
     {
         return str_replace([
             '$PHARMACY',
@@ -28,7 +33,17 @@ class AssetTransformer
             $product->getModel(),
             $product->getCode(),
             $asset,
-        ], $this->template);
+        ], $template);
+    }
+
+    public function transform(Pharmacy $pharmacy, Product $product, string $asset): string
+    {
+        return $this->transformPath(
+            $pharmacy,
+            $product,
+            $this->template,
+            $this->transformPath($pharmacy, $product, $asset, $asset)
+        );
     }
 }
 

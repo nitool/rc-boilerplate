@@ -16,10 +16,20 @@ class Pharmacy
      */
     private $assetTransformer;
 
-    public function __construct(string $code, AssetTransformer $assetTransformer)
+    /**
+     * @var bool
+     */
+    private $externalStyles;
+
+    public function __construct(
+        string $code,
+        AssetTransformer $assetTransformer,
+        bool $externalStyles = false
+    )
     {
         $this->code = $code;
         $this->assetTransformer = $assetTransformer;
+        $this->externalStyles = $externalStyles;
     }
 
     public function getCode(): string 
@@ -31,5 +41,9 @@ class Pharmacy
     {
         return $this->assetTransformer->transform($this, $product, $url);
     }
-}
 
+    public function hasExternalStyles(): bool
+    {
+        return $this->externalStyles;
+    }
+}

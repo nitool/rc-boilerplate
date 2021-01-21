@@ -1,0 +1,12 @@
+{% set mode = mode | default('render') %}
+{% if pharmacy.hasExternalStyles() and mode == 'export' %}
+    <script>
+        window.RC = {
+            stylesToLoad: {
+                '{{ product.code }}-css': '{{ pharmacy.getAssetPath(product, (product.code ~ '.css')) }}'
+            }
+        }
+    </script>
+
+    {{ insert_inline_static_scripts('styleLoader') }} 
+{% endif %}

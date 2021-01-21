@@ -34,7 +34,7 @@ $renderSingleCardCommand = new RenderSingleCardCommand(
 
 $createExportPackageCommand = new CreateExportPackageCommand(
     $twig,
-    $projectDir . DIRECTORY_SEPARATOR . 'cards',
+    $projectDir . DIRECTORY_SEPARATOR . 'dists',
     $projectDir . DIRECTORY_SEPARATOR . 'build',
     new PharmacyCreator(),
     $products

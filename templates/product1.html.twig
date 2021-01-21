@@ -4,9 +4,14 @@
         <title>{{ name }}</title>
     </head>
     <body>
-        {{ insert_inline_styles(pharmacy, product) }}
+        {% set mode = mode | default('render') %}
+        {% if pharmacy.hasExternalStyles() == false or mode == 'render' %}
+            {{ insert_inline_styles(pharmacy, product) }}
+        {% endif %}
+
         to jest przykład {{ name }}
 
+        {% include './_utils/style-loader.html.twig' %}
         {{ insert_inline_scripts(pharmacy, product) }}
     </body>
 </html>

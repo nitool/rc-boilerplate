@@ -95,6 +95,7 @@ class CreateExportPackageCommand extends Command
             $content = $this->twig->render($product->getCode() . '.html.twig', [
                 'product' => $product,
                 'pharmacy' => $pharmacy,
+                'mode' => 'export',
             ]);
 
             file_put_contents(

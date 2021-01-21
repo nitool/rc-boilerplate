@@ -104,6 +104,7 @@ class RenderSingleCardCommand extends Command
         $content = $this->twig->render($product->getCode() . '.html.twig', [
             'product' => $product,
             'pharmacy' => $pharmacy,
+            'mode' => 'render',
         ]);
 
         @unlink($this->preparePath($pharmacy, $product));

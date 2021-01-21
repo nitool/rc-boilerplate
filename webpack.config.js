@@ -54,6 +54,7 @@ module.exports = (env, argv) => {
 
     return {
         entry: {
+            styleLoader: path.resolve(__dirname, 'assets', 'js', 'styleLoader.js'),
             ...generateEntries('product1'),
         },
         output: {
