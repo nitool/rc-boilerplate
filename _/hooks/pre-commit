@@ -9,7 +9,8 @@ printf -- "\n\n pre commit procedure begins \n\n"
 
 docker container rm -f ${CONTAINER_NAME} &>/dev/null || true
 docker container run \
-    -v $(pwd):/var/www/html \
+    -v $(pwd):/home/tester/rc \
+    -w /home/tester/rc \
     -d --name=${CONTAINER_NAME} ${IMAGE_NAME} sleep infinity
 
 docker container exec -t ${CONTAINER_NAME} composer test

@@ -14,6 +14,9 @@ RUN tar -xf /tmp/node-$NODE_VERSION-linux-x64.tar.xz
 RUN mv node-* /usr/lib/node
 RUN rm /tmp/node-$NODE_VERSION-linux-x64.tar.xz
 RUN npm -g config set user root
+RUN useradd -d /home/tester -m -s /bin/bash tester
+RUN adduser tester sudo
 
-WORKDIR /var/www/html
-
+WORKDIR /home/tester
+RUN chown -R tester:tester /home/tester
+USER tester

@@ -10,6 +10,7 @@ docker image build -t ${basename} .
 
 printf -- "running %s container\n" ${basename}
 docker container run --rm -it \
-    -v ${current_directory}:/var/www/html \
+    -v ${current_directory}:/home/tester/rc \
+    -w /home/tester/rc \
     ${basename} bash
 

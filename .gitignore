@@ -5,4 +5,5 @@ cards/*
 !cards/.keep
 dists/*
 !dists/.keep
+.npm/
 .phpunit.result.cache
