@@ -68,6 +68,5 @@ class AssetExtension extends AbstractExtension
         return sprintf('<script>%s</script>', join('\n', array_map(function (string $file) { 
             return file_get_contents($file); 
         }, $this->assetManager->getScriptEntryFiles($entryName))));
-
     }
 }
